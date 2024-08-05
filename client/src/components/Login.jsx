@@ -11,7 +11,7 @@ export default function Login() {
     const handleLogin=(e)=>{
         e.preventDefault();
         console.log(`${Email},${Password}`);
-        axios.post("http://localhost:3000/login",{Email,Password}).then((result)=>{
+        axios.post("https://task-manager-2bcq.onrender.com/login",{Email,Password}).then((result)=>{
             console.log(result);
             navigate("/Lists")
         }).catch((err)=>{
