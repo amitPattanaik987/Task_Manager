@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const db = require("./db");
-const details = require("./models/details");
+const detailsmodel = require("./models/details");
 const cors = require("cors");
 const Listmodel = require("./models/list");
 
@@ -11,7 +11,7 @@ app.use(cors());
 app.post("/", async (req, res) => {
   try {
     const data = req.body;
-    const newdata = new details(data);
+    const newdata = new detailsmodel(data);
     const response = await newdata.save();
     return res.status(200).json(response);
   } catch (error) {
@@ -94,13 +94,16 @@ app.get("/Lists", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   const { Email, Password } = req.body;
+  console.log(Email)
+  console.log(Password)
   try {
     if (!Email || !Password) {
       return res
         .status(400)
         .json({ success: false, message: "Please Enter Email and Password" });
     }
-    const response = await details.findOne({ Email });
+    const response = await detailsmodel.findOne({ Email });
+    console.log(response)
     if (!response) {
       return res
         .status(401)

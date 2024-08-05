@@ -14,9 +14,9 @@ function Sign_up() {
 
         axios.post("http://localhost:3000/", { Email, Password }).then((result) => {
             console.log(result)
+            navigate("/Lists")
         }).catch((err) => {
             console.log(err);
-            setError(err.response ? err.response.data : "Error: Network Error");
         })
     }
 
