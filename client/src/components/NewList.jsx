@@ -27,8 +27,8 @@ export default function NewList() {
 
     return (
         <div className='flex justify-center items-center h-screen'>
-            <div className='w-[40%] h-[180px] bg-white p-[15px] flex flex-col gap-[16px] rounded-xl'>
-                <h1 className='bg-white'>CREATE A NEW LIST</h1>
+            <div className='w-[40%] h-[180px] bg-white p-[15px] flex flex-col gap-[16px] rounded-xl max-md:w-[90%] max-md:h-[220px] max-md:justify-center'>
+                <h1 className='bg-white max-md:text-[25px]'>CREATE A NEW LIST</h1>
                 <input
                     type="text"
                     className="form-control"

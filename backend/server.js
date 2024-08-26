@@ -6,13 +6,7 @@ const cors = require("cors");
 const Listmodel = require("./models/list");
 
 app.use(express.json());
-app.use(cors(
-  {
-    origin:["https://deploy-mern-1whq.vercel.app"],
-    methods:["POST","GET"],
-    credentials:true
-  }
-));
+app.use(cors());
 
 app.post("/", async (req, res) => {
   try {
