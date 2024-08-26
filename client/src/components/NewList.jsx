@@ -11,7 +11,7 @@ export default function NewList() {
         e.preventDefault();
         console.log(List);
 
-        axios.post("http://localhost:3000/NewList",  {List} )
+        axios.post("https://task-manager-2bcq.onrender.com/NewList",  {List} )
             .then((result) => {
                 console.log(result);
                 navigate("/Lists");

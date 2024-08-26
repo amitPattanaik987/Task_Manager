@@ -12,7 +12,7 @@ function Sign_up() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        axios.post("http://localhost:3000/", { Email, Password }).then((result) => {
+        axios.post("https://task-manager-2bcq.onrender.com/", { Email, Password }).then((result) => {
             console.log(result)
             navigate("/Lists")
         }).catch((err) => {

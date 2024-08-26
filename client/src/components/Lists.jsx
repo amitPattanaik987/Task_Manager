@@ -19,7 +19,7 @@ function Lists() {
 
   useEffect(() => {
     axios
-      .get('http://localhost:3000/Lists')
+      .get('https://task-manager-2bcq.onrender.com/Lists')
       .then(response => {
         setLists1(response.data);
       })
@@ -33,7 +33,7 @@ function Lists() {
     setlistclicked(true);
     setclickedelement(e.target.innerHTML);
     setListname(e.target.innerHTML);
-    axios.get("http://localhost:3000/Lists").then((response) => {
+    axios.get("https://task-manager-2bcq.onrender.com/Lists").then((response) => {
       const a = e.target.innerHTML;
       response.data.map((item) => {
         if (item.List === a) {
@@ -48,7 +48,7 @@ function Lists() {
   const doubleclick = (e) => {
     const deleteList = e.target.innerHTML;
 
-    axios.delete("http://localhost:3000/Lists", { data: { deleteList } }).then((result) => {
+    axios.delete("https://task-manager-2bcq.onrender.com/Lists", { data: { deleteList } }).then((result) => {
       console.log(result);
       window.location.reload();
     }).catch((err) => {
@@ -63,7 +63,7 @@ function Lists() {
   function deleteclicked(item) {
     console.log(item);
     console.log(clickedelement);
-    axios.post("http://localhost:3000/delete/sublist", { tasks: item, List: clickedelement }).then((result) => {
+    axios.post("https://task-manager-2bcq.onrender.com/delete/sublist", { tasks: item, List: clickedelement }).then((result) => {
       console.log(result);
       window.location.reload();
     }).catch((err) => {
