@@ -11,27 +11,3 @@
     height: 100%;
 }
 
-/* @media (max-height: 1200px) {
-  
-  .list-data {
-    height: 780px;
-  }
-  .inner-list{
-    margin: 2px 0px;
-  }
-  .tasks-data{
-    height: 745px;
-  }
-}
-@media (max-height: 1120px) {
-  
-  .list-data {
-    height: 730px;
-  }
-  .inner-list{
-    margin: 2px 0px;
-  }
-  .tasks-data{
-    height: 700px;
-  }
-} */
