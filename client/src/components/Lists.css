@@ -1,13 +1,25 @@
-.left-container{
-    height: 100%;
+.inner-list{
+    height: 30px;
 }
-.left-container-upper{
-    height: 90%;
-}
-.list-data{
-    height: 100%;
-}
-.right-main-container{
-    height: 100%;
+.left-container {
+  height: 100%;
 }
 
+.left-container-upper {
+  height: 90%;
+}
+
+.list-data {
+  height: 100%;
+}
+
+.right-main-container {
+  height: 100%;
+}
+
+
+@media (max-width:800px) {
+    .inner-list{
+        font-size: 13px;
+    }
+}

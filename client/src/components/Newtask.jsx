@@ -14,11 +14,12 @@ export default function Newtask() {
         e.preventDefault();
         console.log(task);
         console.log(Listname);
-
-        axios.post("https://task-manager-2bcq.onrender.com/Newtask", {task: task , List:Listname })
+        
+        axios.post("http://localhost:3000/Newtask", {task: task , list:Listname })
             .then((result) => {
                 console.log(result);
                 navigate("/Lists");
+                alert("New Task Added .. Tap On List To View !!")
             })
             .catch((err) => {
                 console.error('Error creating new Task:', err);

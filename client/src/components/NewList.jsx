@@ -4,14 +4,27 @@ import React from 'react';
 import { useNavigate } from "react-router-dom";
 
 export default function NewList() {
-    const [List, setList] = useState();
+    const [list, setlist] = useState();
     const navigate = useNavigate();
 
     const onCreateClick = (e) => {
         e.preventDefault();
-        console.log(List);
+        console.log(list);
+        let email;
+        const token =localStorage.getItem("auth-token");
+        
+        if(!token){
+            console.log("not login");
+            
+            alert("Please Login or Sign-up first !!")
+        }
+        else{
+            console.log("login");
+            
+            email=localStorage.getItem("email");
+        }
 
-        axios.post("https://task-manager-2bcq.onrender.com/NewList",  {List} )
+        axios.post("http://localhost:3000/NewList",  {email,list} )
             .then((result) => {
                 console.log(result);
                 navigate("/Lists");
@@ -33,7 +46,7 @@ export default function NewList() {
                     type="text"
                     className="form-control"
                     placeholder='Enter List here..'
-                    onChange={(e) => setList(e.target.value)}
+                    onChange={(e) => setlist(e.target.value)}
                 />
                 <div className='bg-white flex gap-[10px]'>
                     <button className="btn btn-light" onClick={onCancelClick}>Cancel</button>

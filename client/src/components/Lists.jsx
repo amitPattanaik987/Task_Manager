@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -11,7 +11,7 @@ function Lists() {
   const [Lists1, setLists1] = useState([]);
   const [listclicked, setlistclicked] = useState(false);
   const [clickedelement, setclickedelement] = useState();
-  const { setListname } = useContext(itemsContext)
+  const { setListname, Listname } = useContext(itemsContext)
   const [tasks, settasks] = useState([])
 
   const onNewListClick = () => {
@@ -19,10 +19,22 @@ function Lists() {
   };
 
   useEffect(() => {
+    let email = localStorage.getItem("email")
+    if(!email){
+      alert("Please Logi or SignUp First..")
+    }
+
     axios
-      .get('https://task-manager-2bcq.onrender.com/Lists')
+      .get('http://localhost:3000/Lists', {
+        params: {
+          email: email  // Pass the email as a query parameter
+        }
+      })
       .then(response => {
-        setLists1(response.data);
+        response.data.map((item) => {
+          setLists1((prev) => ([...prev, item.list]))
+        })
+
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -30,32 +42,47 @@ function Lists() {
 
   }, []);
 
-  const event = (e) => {
+
+  const setter = (e) => {
     setlistclicked(true);
-    setclickedelement(e.target.innerHTML);
     setListname(e.target.innerHTML);
-    axios.get("https://task-manager-2bcq.onrender.com/Lists").then((response) => {
-      const a = e.target.innerHTML;
-      response.data.map((item) => {
-        if (item.List === a) {
-          settasks(item.tasks)
-        }
-      })
+    setclickedelement(e.target.innerHTML);
+  }
+
+
+  const event = (e) => {
+
+    axios.get("http://localhost:3000/Listsdata", {
+      params: {
+        list: e.target.innerHTML
+      }
+    }).then((response) => {
+      console.log(response.data[0].tasks);
+      settasks(response.data[0].tasks)
     }).catch(error => {
       console.error('Error fetching tasks:', error);
     })
   };
 
   const doubleclick = (e) => {
-    const deleteList = e.target.innerHTML;
+    console.log(clickedelement);
 
-    axios.delete("https://task-manager-2bcq.onrender.com/Lists", { data: { deleteList } }).then((result) => {
-      console.log(result);
-      window.location.reload();
-    }).catch((err) => {
-      console.error('Error In Deleting the list:', err);
+    const deleteList = clickedelement;
+
+    axios.delete("http://localhost:3000/Lists", {
+      params: {
+        list: deleteList
+      }
     })
+      .then((result) => {
+        console.log(result);
+        window.location.reload(); // Reloads the page after deletion
+      })
+      .catch((err) => {
+        console.error('Error In Deleting the list:', err);
+      });
   }
+
 
   const Addbtnclicked = () => {
     navigate("/Newtask");
@@ -64,7 +91,7 @@ function Lists() {
   function deleteclicked(item) {
     console.log(item);
     console.log(clickedelement);
-    axios.post("https://task-manager-2bcq.onrender.com/delete/sublist", { tasks: item, List: clickedelement }).then((result) => {
+    axios.post("http://localhost:3000/delete/sublist", { task: item, list: clickedelement }).then((result) => {
       console.log(result);
       window.location.reload();
     }).catch((err) => {
@@ -72,16 +99,17 @@ function Lists() {
     })
   }
 
+
   return (
     <div className='Outer-box flex justify-center items-center h-screen'>
       <div className='w-[70%] h-[70%] bg-white rounded-lg flex xl:p-[20px] max-xl:p-[15px] max-lg:p-[10px] max-sm:p-[5px] max-lg:w-[70%] max-sm:w-[95%]'>
         <div className='bg-white w-[35%] p-[5px] flex flex-col justify-between max-xl:p-[8px] left-container'>
           <div className='flex flex-col gap-[3px] bg-white max-xl:gap-[2px] left-container-upper'>
-            <p className='bg-white text-sky-600 text-[18px] flex max-xl:text-[17px] justify-between p-[4px] max-sm:p-[3px] max-sm:text-[15px] max-sm:flex max-sm:flex-col max-sm:text-center'>LISTS<span className='bg-white'>{Lists1.length != 0 ? <p className='text-[15px] text-center bg-white text-red-500 max-xl:text-[13px]'>(DOUBLECLICK TO DELETE)</p> : null}</span></p>
+            <p className='bg-white text-sky-600 text-[18px] flex  justify-center p-[4px] max-sm:p-[3px] max-sm:flex max-sm:flex-col max-sm:text-center'>LISTS</p>
             <div className='flex flex-col gap-[3px] bg-white p-[5px] overflow-y-auto list-data'>
               {Lists1.length > 0 ? (
                 Lists1.map((item) => (
-                  <p key={item._id} className='p-[4px] flex justify-center cursor-pointer text-center select-none max-xl:h-[35px] max-sm:text-[13px] max-sm:p-[2px] inner-list' onClick={event} onDoubleClick={doubleclick}>{item.List}</p>
+                  <p key={item._id} className=' px-[10px] flex items-center cursor-pointer select-none max-sm:text-[13px] max-sm:p-[2px] inner-list justify-between' onClick={(e) => { setter(e); event(e) }} >{item}</p>
                 ))
               ) : (
                 <p className='flex text-center justify-center bg-orange-300 text-3xl p-[20px]'>No lists available !!</p>
@@ -106,8 +134,11 @@ function Lists() {
                 :
                 <div className='bg-white flex flex-col right-main-container'>
                   <div className='bg-white flex justify-between items-center mb-4'>
-                    <p className='bg-white text-3xl text-sky-600 p-2 max-sm:text-[20px]'>TASKS-{clickedelement}</p>
-                    <button className='btn btn-success' onClick={Addbtnclicked}>+</button>
+                    <p className='bg-white w-[80%] text-3xl text-sky-600 p-2 max-sm:text-[20px] overflow-x-auto right-task-open'>TASKS-{clickedelement}</p>
+                    <div className='bg-white flex gap-1'>
+                      <button className='btn btn-success' onClick={Addbtnclicked}>+</button>
+                      <button className='btn btn-danger' onClick={doubleclick}>🗑️</button>
+                    </div>
                   </div>
                   <div className='flex flex-col gap-1 bg-white p-2 overflow-y-auto tasks-data'>
                     {
