@@ -24,7 +24,7 @@ export default function NewList() {
             email=localStorage.getItem("email");
         }
 
-        axios.post("http://localhost:3000/NewList",  {email,list} )
+        axios.post("https://task-manager-2bcq.onrender.com/NewList",  {email,list} )
             .then((result) => {
                 console.log(result);
                 navigate("/Lists");
