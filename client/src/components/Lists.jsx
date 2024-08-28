@@ -25,7 +25,7 @@ function Lists() {
     }
 
     axios
-      .get('http://localhost:3000/Lists', {
+      .get('https://task-manager-2bcq.onrender.com/Lists', {
         params: {
           email: email  // Pass the email as a query parameter
         }
@@ -52,7 +52,7 @@ function Lists() {
 
   const event = (e) => {
 
-    axios.get("http://localhost:3000/Listsdata", {
+    axios.get("https://task-manager-2bcq.onrender.com/Listsdata", {
       params: {
         list: e.target.innerHTML
       }
@@ -69,7 +69,7 @@ function Lists() {
 
     const deleteList = clickedelement;
 
-    axios.delete("http://localhost:3000/Lists", {
+    axios.delete("https://task-manager-2bcq.onrender.com/Lists", {
       params: {
         list: deleteList
       }
@@ -91,7 +91,7 @@ function Lists() {
   function deleteclicked(item) {
     console.log(item);
     console.log(clickedelement);
-    axios.post("http://localhost:3000/delete/sublist", { task: item, list: clickedelement }).then((result) => {
+    axios.post("https://task-manager-2bcq.onrender.com/delete/sublist", { task: item, list: clickedelement }).then((result) => {
       console.log(result);
       window.location.reload();
     }).catch((err) => {
