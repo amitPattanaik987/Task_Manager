@@ -25,7 +25,7 @@ function Lists() {
     }
 
     axios
-      .get(https://task-management-2-5ack.onrender.com/Lists', {
+      .get('https://task-management-2-5ack.onrender.com/Lists', {
         params: {
           email: email  // Pass the email as a query parameter
         }
