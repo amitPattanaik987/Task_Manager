@@ -185,6 +185,6 @@ app.post("/delete/sublist", async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
-  console.log("Server is running in port 3000");
+app.listen(3000, (req,res) => {
+  res.send("Server is running in port 3000");
 });
