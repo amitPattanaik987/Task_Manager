@@ -12,7 +12,7 @@ function Sign_up() {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(`${email} and ${password}`);
-        axios.post("https://task-manager-2bcq.onrender.com/", { email, password }).then((responsedata) => {
+        axios.post("https://task-manager-new-ze7f.onrender.com/", { email, password }).then((responsedata) => {
             if (responsedata.data.success) {
                 localStorage.setItem('auth-token', responsedata.data.token);
                 localStorage.setItem('email', responsedata.data.email);
