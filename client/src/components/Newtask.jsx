@@ -15,7 +15,7 @@ export default function Newtask() {
         console.log(task);
         console.log(Listname);
         
-        axios.post("https://task-management-2-5ack.onrender.com/Newtask", {task: task , list:Listname })
+        axios.post("https://task-manager-new-ze7f.onrender.com/Newtask", {task: task , list:Listname })
             .then((result) => {
                 console.log(result);
                 navigate("/Lists");
