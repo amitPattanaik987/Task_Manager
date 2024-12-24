@@ -11,7 +11,7 @@ export default function Login() {
     const handleLogin=(e)=>{
         e.preventDefault();
         console.log(`${Email},${Password}`);
-        axios.post("https://task-management-2-5ack.onrender.com/login",{email:Email,password:Password}).then((result)=>{
+        axios.post("https://task-manager-new-ze7f.onrender.com/login",{email:Email,password:Password}).then((result)=>{
             console.log(result);
             localStorage.setItem('auth-token',result.data.token);
             localStorage.setItem('email',result.data.email);
